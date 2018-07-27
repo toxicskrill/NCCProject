@@ -1,0 +1,151 @@
+<app-dashboard></app-dashboard>
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a routerLink="/my-dashboard">My Dashboard</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a routerLink="/create-project"> Create Project</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a routerLink="/create-note">Create Notes</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <a routerLink="/add-user">Add user to the project</a>
+            </li>
+        </ol>
+        <div class="card add-user">
+            <div class="card-header text-center">
+                <h3> Information Project </h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-hover table-responsive-sm table-sm table-project">
+                     <thead >
+                        <tr>
+                            <td scope="col" style="width:25%;">ID</td>
+                            <td scope="col" style="width:75%;">{{projectDetail.project_id}}</td>                           
+                        </tr>
+                    </thead> 
+                    <tbody>
+                        <tr>
+                            <td >Name Project</td>
+                            <td>{{projectDetail.projectName}}</td>
+                        </tr>
+                        <tr>
+                            <td >Name PM</td>
+                            <td>{{projectDetail.pm}}</td>
+                        </tr>
+                        <tr> 
+                            <td >Name Customer</td>
+                            <td>{{projectDetail.customer}}</td>
+                        </tr>
+                        <tr>
+                                <td >Name Technology</td>
+                                <td>{{projectDetail.technology}}</td>
+                        </tr>
+                        <tr>
+                                <td >Description</td>
+                                <td>{{projectDetail.description}}</td>
+                        </tr>
+                        <tr>
+                                <td >Status</td>
+                                <td>{{projectDetail.status}}</td>
+                        </tr>
+                        <tr>
+                                <td >Notes</td>
+                                <td>{{projectDetail.notes}}</td>
+                        </tr>
+                        <tr>
+                                <td >User in the project</td>
+                                <td>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" (click) = "getUserlist(index)" >list users</button>
+                                <button type="button" class="btn btn-danger"  data-toggle="modal" data-target="#enfprojectModal" style="margin-left: 20px;" >end project</button>    
+                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                          <div class="modal-content">
+                                            <div class="modal-header">
+                                              <h5 class="modal-title" id="exampleModalLabel">user list</h5>
+                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                     <table class="table table-bordered table-hover table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <td scope="col">users</td>
+                                                                <td scope="col">action</td>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor = "let list of listUser|paginate: {
+                                                                itemsPerPage: items,
+                                                                currentPage: p,
+                                                                totalItems: maxpage }">
+                                                                <td>{{list.username}}</td>
+                                                                <td><button class="btn btn-danger" type ="button" (click)="KickUser(list.id)">kick</button></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    
+                                                    <pagination-controls
+                                                        (pageChange)="pageChanged(p=$event)"
+                                                        autoHide="false">
+                                                    </pagination-controls> 
+                                            </div>
+                                            <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                              <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="AddUser();">Add user</button>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                <div class="modal fade" id="enfprojectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">End Project</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form #formEndProject="ngForm">
+                                                <div class="form-group">
+                                                    <div class="form-row">
+                                                        <label for="email">status</label>
+                                                        <select class="form-control" id="status" name="status"  ngModel>
+                                                            <option value = "success">success</option>
+                                                            <option value = "fail">fail</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-row">
+                                                        <label for="email">notes</label>
+                                                        <textarea class="form-control" id="notes" type="text"  name="notes"  ngModel></textarea>
+                                                    </div>
+                                                    <br>
+                                                    <div>
+                                                            
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                               <button class="btn btn-secondary" data-dismiss="modal" type="submit" (click) = "setEndProject(formEndProject);" >Ok</button>
+                                        
+                                        </div> 
+                                        </div>
+                                    </div>
+                                    </div>  
+                                </td> 
+                        </tr>
+                       
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

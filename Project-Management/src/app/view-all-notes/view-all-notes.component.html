@@ -1,0 +1,114 @@
+<app-dashboard></app-dashboard>
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a routerLink="/my-dashboard">My Dashboard</a>
+      </li>
+      <li class="breadcrumb-item">
+        <a routerLink="/create-project"> Create Project</a>
+      </li>
+      <li class="breadcrumb-item">
+        <a routerLink="/create-note">Create Notes</a>
+      </li>
+      <li class="breadcrumb-item active">
+        <a routerLink="/add-user">Add user to the project</a>
+      </li>
+      <li class="breadcrumb-item active">
+        View all notes
+      </li>
+      <li class="breadcrumb-item active">
+        <a routerLink="/view-all-users">View all users</a>
+      </li>
+    </ol>
+    <div class="card add-user">
+      <div class="card-header text-center">
+        <h3>View all notes</h3>
+      </div>
+      <div class="card-body">
+        <form #formProjectFilter="ngForm" (ngSubmit)="onSubmit(formProjectFilter);">
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-md-4 form-control-sm">
+                <label for="name-field">Field</label>
+
+              </div>
+              <div class="col-md-4 form-control-sm">
+                <label for="value-filter">Value</label>
+
+
+              </div>
+
+            </div>
+            <div class="form-row">
+              <div class="col-md-4 form-control-sm">
+                <select class="form-control"
+                        id="name-field"
+                        [(ngModel)]="selectField"
+                        name="filterSelected">
+                  <option *ngFor="let item of field" [value]="item">
+                    {{item}}
+                  </option>
+                </select>
+
+              </div>
+              <div class="col-md-4 form-control-sm">
+                <input
+                        class="form-control"
+                        id="value-filter"
+                        placeholder="Enter Filter value"
+                        name="value_filter"
+                        [(ngModel)] = "value_filter"
+                        #txtValueFilter="ngModel"
+                        ngModel
+                        required
+                >
+              </div>
+              <div class="col-md-4 form-control-sm">
+                <button class="btn btn-primary btn-danger" type="submit">Filter</button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="row justify-content-around">
+          <table class="table table-bordered table-hover table-responsive-sm table-sm table-project">
+            <thead class="text-center">
+            <tr>
+              <td><strong>#</strong></td>
+              <td scope="col"><strong>ID Note</strong></td>
+              <td scope="col"><strong>Name Project</strong></td>
+              <td scope="col"><strong>Role</strong></td>
+              <td scope="col"><strong>Type</strong></td>
+              <td scope="col"><strong>Hours</strong></td>
+              <td scope="col"><strong>Date</strong></td>
+              <td scope="col"><strong>Username</strong></td>
+              <td scope="col"><strong>Description</strong></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="text-center" *ngFor="let item of listAllNotes | paginate: {
+                                                      itemsPerPage: numberItemsPage,
+                                                      currentPage: p,
+                                                      totalItems: countsItem }">
+              <td></td>
+              <td scope="row">{{item[1].id}}</td>
+              <td>{{item[1].projectName}}</td>
+              <td>{{item[1].role}}</td>
+              <td>{{item[1].type}}</td>
+              <td>{{item[1].hours}}</td>
+              <td>{{item[1].date | date}}</td>
+              <td>{{item[1].username}}</td>
+              <td>{{item[1].description}}</td>
+            </tr>
+            </tbody>
+          </table>
+          <pagination-controls
+                                (pageChange)="pageChanged(p = $event)"
+                                autoHide="false">
+          </pagination-controls>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

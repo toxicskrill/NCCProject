@@ -1,0 +1,102 @@
+<app-dashboard></app-dashboard>
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a routerLink="/my-dashboard">My Dashboard</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a routerLink="/create-project">Create Project</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a routerLink="/create-note">Create Notes</a>
+            </li>
+            <li class="breadcrumb-item active">
+                Add user to the project
+            </li>
+            <li class="breadcrumb-item">
+
+                <a routerLink="/get-all-project">All Project</a>
+
+                <a routerLink="/view-all-notes">View all notes</a>
+
+            </li>
+            <li class="breadcrumb-item active">
+                <a routerLink="/view-all-users">View all users</a>
+            </li>
+        </ol>
+        <div class="card add-user">
+            <div class="card-header text-center">
+                <h3>Add user to the project</h3>
+            </div>
+            <div class="card-body">
+                <form #formAddUser="ngForm" (ngSubmit)="onSubmit(formAddUser);">
+                    <div class="form-group">
+                        <div class="form-control-sm">
+                            <label for="select-project">Select the project name:</label>
+                            <select
+                                class="custom-select"
+                                id="select-project"
+                                [(ngModel)]="selectProject"
+                                name="project_ID"
+                            >
+                                <option
+                                    *ngFor="let item of listProjects"
+                                    [value]="item[1].project_id"
+                                >
+                                    {{item[1].projectName}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-control-sm">
+                            <label for="name-user">Select user: </label>
+                            <select
+                                class="custom-select"
+                                id="select-user"
+                                [(ngModel)]="selectUser"
+                                name="user_ID"
+                            >
+                                <option
+                                    *ngFor="let item of listUsers"
+                                    [value]="item.id"
+                                >
+                                    {{item.email}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-control-sm">
+                            <label for="role">Roles</label>
+                            <input
+                                class="form-control"
+                                id="role"
+                                placeholder="Enter role"
+                                name="role"
+                                #txtRole="ngModel"
+                                ngModel
+                                required
+                            >
+                            <p *ngIf="txtRole.touched && txtRole.errors?.required" class="text-danger">
+                                Role is required.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-6 text-right">
+                                <a class="btn btn-secondary" routerLink="/my-dashboard">Cancel</a>
+                            </div>
+                            <div class="col-6 text-left">
+                                <button
+                                    class="btn btn-primary"
+                                    type="submit"
+                                    [disabled]="formAddUser.invalid"
+                                >Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
